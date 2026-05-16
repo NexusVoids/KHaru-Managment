@@ -14,10 +14,10 @@
     }
 
     body{
-      min-height:100vh;
+      min-height:140vh;
       background: linear-gradient(135deg, #001E44, #003B7A, #0A5EB0);
-      overflow:hidden;
       color:white;
+      overflow-x:hidden;
     }
 
     .bg-glow{
@@ -96,6 +96,67 @@
     footer{
       position:absolute;
       bottom:20px;
+      left:20px;
+      color:#d6e7ff;
+      font-size:14px;
+    }
+
+    .code-section{
+      position:absolute;
+      bottom:80px;
+      left:20px;
+    }
+
+    .small-btn{
+      padding:10px 18px;
+      border:none;
+      border-radius:12px;
+      background:white;
+      color:#003B7A;
+      font-weight:bold;
+      cursor:pointer;
+      transition:0.3s;
+    }
+
+    .small-btn:hover{
+      background:#dbeaff;
+      transform:scale(1.05);
+    }
+
+    .code-panel{
+      display:none;
+      margin-top:15px;
+      background:rgba(255,255,255,0.1);
+      border:1px solid rgba(255,255,255,0.2);
+      padding:15px;
+      border-radius:15px;
+      width:260px;
+      backdrop-filter:blur(10px);
+    }
+
+    .code-panel input{
+      width:100%;
+      padding:10px;
+      margin-top:10px;
+      border:none;
+      border-radius:10px;
+      outline:none;
+    }
+
+    .upload-btn{
+      margin-top:10px;
+      width:100%;
+      padding:10px;
+      border:none;
+      border-radius:10px;
+      background:white;
+      color:#003B7A;
+      font-weight:bold;
+      cursor:pointer;
+    }
+
+    .status{
+      margin-top:10px;
       color:#d6e7ff;
       font-size:14px;
     }
@@ -139,11 +200,80 @@
 
     </div>
 
-    <footer>
-      © 2026 Kharú Management
-    </footer>
+  </div>
+
+  <!-- CODE BUTTON -->
+  <div class="code-section">
+
+    <button class="small-btn" onclick="togglePanel()">
+      🔐 CODE!
+    </button>
+
+    <div class="code-panel" id="codePanel">
+
+      <p>Enter Access Code</p>
+
+      <input type="password" id="codeInput" placeholder="Enter code...">
+
+      <button class="upload-btn" onclick="checkCode()">
+        VERIFY
+      </button>
+
+      <div id="uploadArea" style="display:none;">
+
+        <input type="file" id="fileSelector">
+
+        <button class="upload-btn" onclick="saveGuide()">
+          SAVE GUIDE FILE
+        </button>
+
+      </div>
+
+      <div class="status" id="statusText"></div>
+
+    </div>
 
   </div>
+
+  <footer>
+    © 2026 Kharú Management
+  </footer>
+
+  <script>
+    function togglePanel() {
+      const panel = document.getElementById("codePanel");
+
+      if(panel.style.display === "block"){
+        panel.style.display = "none";
+      } else {
+        panel.style.display = "block";
+      }
+    }
+
+    function checkCode() {
+      const code = document.getElementById("codeInput").value;
+      const status = document.getElementById("statusText");
+      const uploadArea = document.getElementById("uploadArea");
+
+      if(code === "HARU23R"){
+        status.innerHTML = "✅ Access Granted";
+        uploadArea.style.display = "block";
+      } else {
+        status.innerHTML = "❌ Incorrect Code";
+      }
+    }
+
+    function saveGuide() {
+      const fileInput = document.getElementById("fileSelector");
+      const status = document.getElementById("statusText");
+
+      if(fileInput.files.length > 0){
+        status.innerHTML = "✅ Guide file selected: " + fileInput.files[0].name;
+      } else {
+        status.innerHTML = "❌ Please select a file.";
+      }
+    }
+  </script>
 
 </body>
 </html>
