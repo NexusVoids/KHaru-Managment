@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Kharú Management</title>
 
   <style>
@@ -15,29 +15,16 @@
 
     body{
       min-height:140vh;
-      background: linear-gradient(135deg, #001E44, #003B7A, #0A5EB0);
+      background:linear-gradient(135deg,#001E44,#003B7A,#0A5EB0);
       color:white;
       overflow-x:hidden;
     }
 
-    .bg-glow{
-      position:absolute;
-      width:600px;
-      height:600px;
-      background:rgba(255,255,255,0.08);
-      filter:blur(120px);
-      border-radius:50%;
-      top:-150px;
-      right:-150px;
-    }
-
     .container{
-      position:relative;
-      z-index:2;
       display:flex;
-      flex-direction:column;
-      align-items:center;
       justify-content:center;
+      align-items:center;
+      flex-direction:column;
       height:100vh;
       text-align:center;
       padding:20px;
@@ -46,30 +33,21 @@
     h1{
       font-size:70px;
       margin-bottom:10px;
-      letter-spacing:2px;
-      text-shadow:0 0 20px rgba(255,255,255,0.2);
     }
 
     .subtitle{
-      font-size:20px;
-      color:#d6e7ff;
+      color:#dbeaff;
       margin-bottom:40px;
+      font-size:20px;
     }
 
     .card{
       background:rgba(255,255,255,0.08);
       border:1px solid rgba(255,255,255,0.15);
-      backdrop-filter:blur(12px);
+      backdrop-filter:blur(10px);
       padding:35px;
       border-radius:25px;
       width:400px;
-      box-shadow:0 0 30px rgba(0,0,0,0.3);
-    }
-
-    .coming{
-      font-size:30px;
-      margin-bottom:25px;
-      font-weight:bold;
     }
 
     .btn{
@@ -79,74 +57,62 @@
       margin-top:15px;
       border:none;
       border-radius:15px;
-      background:#ffffff;
+      background:white;
       color:#003B7A;
       font-size:18px;
       font-weight:bold;
       cursor:pointer;
-      transition:0.3s;
       text-decoration:none;
     }
 
     .btn:hover{
-      transform:scale(1.03);
       background:#dbeaff;
     }
 
-    footer{
-      position:absolute;
+    .code-btn{
+      position:fixed;
       bottom:20px;
       left:20px;
-      color:#d6e7ff;
-      font-size:14px;
-    }
-
-    .code-section{
-      position:absolute;
-      bottom:80px;
-      left:20px;
-    }
-
-    .small-btn{
-      padding:10px 18px;
+      padding:10px 16px;
       border:none;
       border-radius:12px;
       background:white;
       color:#003B7A;
       font-weight:bold;
       cursor:pointer;
-      transition:0.3s;
     }
 
-    .small-btn:hover{
-      background:#dbeaff;
-      transform:scale(1.05);
-    }
-
-    .code-panel{
+    .popup{
+      position:fixed;
+      top:50%;
+      left:50%;
+      transform:translate(-50%,-50%);
+      background:#0b2e5e;
+      padding:25px;
+      border-radius:20px;
+      width:320px;
       display:none;
-      margin-top:15px;
-      background:rgba(255,255,255,0.1);
-      border:1px solid rgba(255,255,255,0.2);
-      padding:15px;
-      border-radius:15px;
-      width:260px;
-      backdrop-filter:blur(10px);
+      z-index:999;
+      box-shadow:0 0 25px rgba(0,0,0,0.5);
     }
 
-    .code-panel input{
+    .popup h2{
+      margin-bottom:15px;
+    }
+
+    .popup input{
       width:100%;
-      padding:10px;
+      padding:12px;
       margin-top:10px;
       border:none;
       border-radius:10px;
       outline:none;
     }
 
-    .upload-btn{
-      margin-top:10px;
+    .popup button{
       width:100%;
-      padding:10px;
+      margin-top:15px;
+      padding:12px;
       border:none;
       border-radius:10px;
       background:white;
@@ -157,14 +123,20 @@
 
     .status{
       margin-top:10px;
-      color:#d6e7ff;
+      color:#dbeaff;
+      font-size:14px;
+    }
+
+    footer{
+      position:fixed;
+      bottom:20px;
+      right:20px;
+      color:#dbeaff;
       font-size:14px;
     }
   </style>
 </head>
 <body>
-
-  <div class="bg-glow"></div>
 
   <div class="container">
 
@@ -176,24 +148,20 @@
 
     <div class="card">
 
-      <div class="coming">
-        Session Hosting
-      </div>
+      <h2>Session Hosting</h2>
 
-      <p style="margin-bottom:20px; color:#d6e7ff;">
+      <p style="margin-top:10px;color:#dbeaff;">
         Coming Soon...
       </p>
 
-      <!-- DOWNLOAD GUIDE -->
-      <a class="btn"
-         href="TRAINING%20GUIDE.txt"
-         download="KHaru_Training_Guide.txt">
-         📋 GUIDE TRAINING
+      <!-- GUIDE BUTTON -->
+      <a class="btn" id="guideButton" href="#" download>
+        📋 GUIDE TRAINING
       </a>
 
-      <!-- EXTERNAL WEBSITE -->
-      <a class="btn" 
-         href="https://nexusvoids.github.io/Haru-Hub/" 
+      <!-- HARU HUB -->
+      <a class="btn"
+         href="https://nexusvoids.github.io/Haru-Hub/"
          target="_blank">
          🌐 OPEN HARU HUB
       </a>
@@ -203,35 +171,34 @@
   </div>
 
   <!-- CODE BUTTON -->
-  <div class="code-section">
+  <button class="code-btn" onclick="openPopup()">
+    🔐 CODE!
+  </button>
 
-    <button class="small-btn" onclick="togglePanel()">
-      🔐 CODE!
+  <!-- POPUP -->
+  <div class="popup" id="popup">
+
+    <h2>Guide Access</h2>
+
+    <input type="password"
+           id="codeInput"
+           placeholder="Enter Code">
+
+    <button onclick="verifyCode()">
+      VERIFY CODE
     </button>
 
-    <div class="code-panel" id="codePanel">
+    <div id="fileArea" style="display:none;">
 
-      <p>Enter Access Code</p>
+      <input type="file" id="guideFile">
 
-      <input type="password" id="codeInput" placeholder="Enter code...">
-
-      <button class="upload-btn" onclick="checkCode()">
-        VERIFY
+      <button onclick="setGuide()">
+        SET GUIDE FILE
       </button>
 
-      <div id="uploadArea" style="display:none;">
-
-        <input type="file" id="fileSelector">
-
-        <button class="upload-btn" onclick="saveGuide()">
-          SAVE GUIDE FILE
-        </button>
-
-      </div>
-
-      <div class="status" id="statusText"></div>
-
     </div>
+
+    <div class="status" id="status"></div>
 
   </div>
 
@@ -240,39 +207,50 @@
   </footer>
 
   <script>
-    function togglePanel() {
-      const panel = document.getElementById("codePanel");
 
-      if(panel.style.display === "block"){
-        panel.style.display = "none";
-      } else {
-        panel.style.display = "block";
-      }
+    let selectedGuideURL = "";
+
+    function openPopup(){
+      document.getElementById("popup").style.display = "block";
     }
 
-    function checkCode() {
+    function verifyCode(){
+
       const code = document.getElementById("codeInput").value;
-      const status = document.getElementById("statusText");
-      const uploadArea = document.getElementById("uploadArea");
+      const status = document.getElementById("status");
 
       if(code === "HARU23R"){
-        status.innerHTML = "✅ Access Granted";
-        uploadArea.style.display = "block";
-      } else {
-        status.innerHTML = "❌ Incorrect Code";
+        status.innerHTML = "✅ Correct Code";
+        document.getElementById("fileArea").style.display = "block";
+      }
+      else{
+        status.innerHTML = "❌ Wrong Code";
       }
     }
 
-    function saveGuide() {
-      const fileInput = document.getElementById("fileSelector");
-      const status = document.getElementById("statusText");
+    function setGuide(){
+
+      const fileInput = document.getElementById("guideFile");
+      const status = document.getElementById("status");
 
       if(fileInput.files.length > 0){
-        status.innerHTML = "✅ Guide file selected: " + fileInput.files[0].name;
-      } else {
-        status.innerHTML = "❌ Please select a file.";
+
+        const file = fileInput.files[0];
+
+        selectedGuideURL = URL.createObjectURL(file);
+
+        const guideButton = document.getElementById("guideButton");
+
+        guideButton.href = selectedGuideURL;
+        guideButton.download = file.name;
+
+        status.innerHTML = "✅ Guide File Set Successfully";
+      }
+      else{
+        status.innerHTML = "❌ Please Select A File";
       }
     }
+
   </script>
 
 </body>
